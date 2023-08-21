@@ -2,7 +2,7 @@ resource "aws_lb" "grafana_lb" {
   name               = "${var.service}-lb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = aws_security_group.alb_security_group
+  security_groups    = [aws_security_group.alb_security_group.id]
   subnets            = local.placement_subnet_ids
   enable_deletion_protection = true
 }
