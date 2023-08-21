@@ -66,3 +66,10 @@ data "aws_acm_certificate" "certificate" {
   statuses    = ["ISSUED"]
   most_recent = true
 }
+
+data "aws_ec2_managed_prefix_list" "administration" {
+  filter {
+    name   = "prefix-list-name"
+    values = ["administration-cidr-ranges"]
+  }
+}

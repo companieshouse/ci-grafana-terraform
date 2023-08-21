@@ -3,7 +3,7 @@ resource "aws_lb" "grafana_lb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = ["sg-abc123abc"]
-  subnets            = ["subnet-abcde012", "subnet-bcde012a"]
+  subnets            = local.placement_subnet_cidrs
   enable_deletion_protection = true
 }
 
