@@ -1,9 +1,9 @@
 resource "aws_ecs_cluster" "grafana_cluster" {
-  name = "grafana-cluster"
+  name = "${var.service}-cluster"
 }
 
 resource "aws_ecs_task_definition" "grafana_task" {
-  family                = "grafana_task"
+  family                = "${var.service}-task"
   network_mode          = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu = "256"
@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "grafana_task" {
 }
 
 resource "aws_ecs_service" "grafana_service" {
-  name            = "grafana-service"
+  name            = "${var.service}-service"
   cluster         = aws_ecs_cluster.grafana_cluster.id
   task_definition = aws_ecs_task_definition.grafana_task.arn
   launch_type     = "FARGATE"
@@ -40,7 +40,7 @@ resource "aws_ecs_service" "grafana_service" {
   desired_count = 1
 
   network_configuration {
-    subnets = local.placement_subnet_cidrs
+    subnets = local.placement_subnet_ids
     assign_public_ip = false
   }
 

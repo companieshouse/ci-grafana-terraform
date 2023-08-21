@@ -1,14 +1,14 @@
 resource "aws_lb" "grafana_lb" {
-  name               = "grafana-lb"
+  name               = "${var.service}-lb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = ["sg-abc123abc"]
-  subnets            = local.placement_subnet_cidrs
+  security_groups    = aws_security_group.alb_security_group
+  subnets            = local.placement_subnet_ids
   enable_deletion_protection = true
 }
 
 resource "aws_lb_target_group" "grafana_tg" {
-  name     = "grafana-tg"
+  name     = "${var.service}-tg"
   port     = 3000
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.placement.id
