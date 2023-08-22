@@ -19,12 +19,6 @@ variable "repository_name" {
   type        = string
 }
 
-variable "image_repository_name" {
-  description = "The name of the repository that the container is built in"
-  default     = "ci-grafana-image"
-  type        = string
-}
-
 variable "service" {
   description = "The service name to be used when creating AWS resources"
   default     = "ci-grafana"
@@ -39,11 +33,23 @@ variable "team" {
 
 variable "grafana_image_version" {
   description = "The version of the ci-grafana-image container that we are using"
-  default = "latest"
+  default     = "latest"
 }
 
 variable "ssl_certificate_name" {
-  type        = string
   description = "The name of an existing ACM certificate to use for the ELB SSL listener. Setting this disables certificate creation"
-  default = ""
+  default     = ""
+  type        = string
+}
+
+variable "grafana_service_desired_count" {
+  description = "The number of Grafana instances we want to aim for under normal circumstances"
+  default     = 1
+  type        = number
+}
+
+variable "ecr_repository" {
+  description = "The full URI of the ECR repo that we are getting containers from"
+  default     = "416670754337.dkr.ecr.eu-west-2.amazonaws.com/ci-grafana-image"
+  type        = string
 }

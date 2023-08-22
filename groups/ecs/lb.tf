@@ -1,6 +1,6 @@
 resource "aws_lb" "grafana_lb" {
   name               = "${var.service}-lb"
-  internal           = false
+  internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_security_group.id]
   subnets            = local.placement_subnet_ids
@@ -26,7 +26,7 @@ resource "aws_lb_listener" "grafana_listener" {
   load_balancer_arn = aws_lb.grafana_lb.arn
   port              = "443"
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
   certificate_arn   = local.ssl_certificate_arn
 
   default_action {
