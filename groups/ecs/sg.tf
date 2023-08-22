@@ -3,6 +3,16 @@ resource "aws_security_group" "alb_security_group" {
   description = "Restricts access for ${var.service}-${var.environment} lb ${var.service} nodes"
   vpc_id      = data.aws_vpc.placement.id
 
+  ingress {
+    description     = "lb HTTPS ingress from admin and concourse CIDRs"
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    cidr_blocks     = local.web_access
+    prefix_list_ids = [data.aws_ec2_managed_prefix_list.administration.id]
+  }
+
+
   egress {
     description = "Allow outbound traffic"
     from_port   = 0
