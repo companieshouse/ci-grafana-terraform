@@ -8,7 +8,6 @@ resource "aws_security_group" "alb_security_group" {
     from_port       = 443
     to_port         = 443
     protocol        = "tcp"
-    cidr_blocks     = local.web_access
     prefix_list_ids = [data.aws_ec2_managed_prefix_list.administration.id]
   }
 
