@@ -53,3 +53,27 @@ variable "ecr_repository" {
   default     = "416670754337.dkr.ecr.eu-west-2.amazonaws.com/ci-grafana-image"
   type        = string
 }
+
+variable "ecs_grafana_network_mode" {
+  description = "The network_mode that the grafana task requires"
+  default     = "awsvpc"
+  type        = string
+}
+
+variable "ecs_grafana_requires_compatibilities" {
+  description = "The requires_compatibilities that the grafana task requires"
+  default     = "FARGATE"
+  type        = string
+}
+
+variable "ecs_grafana_cpu" {
+  description = "The amount of cpu that the grafana task requires"
+  default     = 256
+  type        = number
+}
+
+variable "ecs_grafana_memory" {
+  description = "The amount of memory that the grafana task requires"
+  default     = 512
+  type        = number
+}

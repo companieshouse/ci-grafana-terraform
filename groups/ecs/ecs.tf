@@ -3,11 +3,11 @@ resource "aws_ecs_cluster" "grafana_cluster" {
 }
 
 resource "aws_ecs_task_definition" "grafana_task" {
-  family                   = "${var.service}-task"
-  network_mode             = "awsvpc"
-  requires_compatibilities = ["FARGATE"]
-  cpu                      = "256"
-  memory                   = "512"
+  family                   = local.ecs_grafana_family
+  network_mode             = var.ecs_grafana_network_mode
+  requires_compatibilities = [var.ecs_grafana_requires_compatibilities]
+  cpu                      = var.ecs_grafana_cpu
+  memory                   = var.ecs_grafana_memory
 
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn

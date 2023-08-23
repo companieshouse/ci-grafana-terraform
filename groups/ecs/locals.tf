@@ -22,6 +22,6 @@ locals {
   image_owner_id              = local.secrets.image_owner_id
   concourse_access_cidrs      = local.secrets.concourse_access_cidrs
   web_access                  = concat(local.placement_subnet_cidrs, [local.concourse_access_cidrs])
-
+  ecs_grafana_family          = "${var.service}-task"
 
 }
