@@ -60,8 +60,8 @@ variable "ecs_grafana_network_mode" {
   type        = string
 }
 
-variable "ecs_grafana_requires_compatibilities" {
-  description = "The requires_compatibilities that the grafana task requires"
+variable "ecs_grafana_launch_type" {
+  description = "The launch_type that the grafana task requires"
   default     = "FARGATE"
   type        = string
 }
