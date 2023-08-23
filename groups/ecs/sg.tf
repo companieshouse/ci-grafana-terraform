@@ -4,7 +4,7 @@ resource "aws_security_group" "alb_security_group" {
   vpc_id      = data.aws_vpc.placement.id
 
   ingress {
-    description     = "lb HTTPS ingress from admin and concourse CIDRs"
+    description     = "lb HTTPS ingress from admin CIDRs"
     from_port       = 443
     to_port         = 443
     protocol        = "tcp"
