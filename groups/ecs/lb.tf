@@ -1,37 +1,37 @@
 resource "aws_lb" "grafana_lb" {
-  name               = "${var.service}-lb"
-  internal           = true
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb_security_group.id]
-  subnets            = local.placement_subnet_ids
-  enable_deletion_protection = true
+  name                       = "${var.service}-lb"
+  internal                   = true
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.alb_security_group.id]
+  subnets                    = local.placement_subnet_ids
+  enable_deletion_protection = false
 }
 
 resource "aws_lb_target_group" "grafana_tg" {
-  name     = "${var.service}-tg"
-  port     = 3000
-  protocol = "HTTP"
-  vpc_id   = data.aws_vpc.placement.id
+  name                       = "${var.service}-tg"
+  port                       = 3000
+  protocol                   = "HTTP"
+  vpc_id                     = data.aws_vpc.placement.id
 
   health_check {
-    healthy_threshold   = 3
-    unhealthy_threshold = 3
-    timeout             = 30
-    interval            = 60
-    path                = "/"
+    healthy_threshold        = 3
+    unhealthy_threshold      = 3
+    timeout                  = 30
+    interval                 = 60
+    path                     = "/"
   }
 }
 
 resource "aws_lb_listener" "grafana_listener" {
-  load_balancer_arn = aws_lb.grafana_lb.arn
-  port              = "443"
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-  certificate_arn   = local.ssl_certificate_arn
+  load_balancer_arn          = aws_lb.grafana_lb.arn
+  port                       = "443"
+  protocol                   = "HTTPS"
+  ssl_policy                 = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn            = local.ssl_certificate_arn
 
   default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.grafana_tg.arn
+    type                     = "forward"
+    target_group_arn         = aws_lb_target_group.grafana_tg.arn
   }
 }
 
