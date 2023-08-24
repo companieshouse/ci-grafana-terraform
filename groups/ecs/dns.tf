@@ -1,6 +1,6 @@
 resource "aws_route53_record" "www" {
   zone_id = data.aws_route53_zone.selected.zone_id
-  name    = var.service
+  name    = "${var.service}.${var.environment}.${data.aws_route53_zone.selected.name}"
   type    = "A"
 
   alias {
