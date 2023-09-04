@@ -31,30 +31,6 @@ data "aws_subnets" "placement" {
   }
 }
 
-data "aws_vpc" "automation" {
-  filter {
-    name   = "tag:Name"
-    values = [local.automation_vpc_pattern]
-  }
-}
-
-data "aws_subnet" "automation" {
-  for_each = toset(data.aws_subnets.automation.ids)
-  id = each.value
-}
-
-data "aws_subnets" "automation" {
-  filter {
-    name = "vpc-id"
-    values = [data.aws_vpc.automation.id]
-  }
-
-  filter {
-    name   = "tag:Name"
-    values = [local.automation_subnet_pattern]
-  }
-}
-
 data "aws_route53_zone" "selected" {
   name         = local.dns_zone_name
   private_zone = false
