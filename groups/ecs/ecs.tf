@@ -35,7 +35,6 @@ resource "aws_ecs_service" "grafana_service" {
   task_definition                   = aws_ecs_task_definition.grafana_task.arn
   launch_type                       = var.ecs_grafana_launch_type
   desired_count                     = var.grafana_service_desired_count
-  iam_role                          = aws_iam_role.ecs_execution_role.arn
   depends_on                        = [
     aws_iam_role.ecs_execution_role,
   ]
