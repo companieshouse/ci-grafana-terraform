@@ -1,5 +1,5 @@
 resource "aws_lb" "grafana_lb" {
-  name                       = "${var.service}-lb"
+  name                       = "${local.resource_prefix}-lb"
   internal                   = true
   load_balancer_type         = "application"
   security_groups            = [aws_security_group.alb_security_group.id]
@@ -8,7 +8,7 @@ resource "aws_lb" "grafana_lb" {
 }
 
 resource "aws_lb_target_group" "grafana_tg" {
-  name                       = "${var.service}-tg"
+  name                       = "${local.resource_prefix}-tg"
   port                       = 3000
   protocol                   = "HTTP"
   vpc_id                     = data.aws_vpc.placement.id
@@ -38,8 +38,8 @@ resource "aws_lb_listener" "grafana_listener" {
 resource "aws_acm_certificate" "certificate" {
   count = local.create_ssl_certificate ? 1 : 0
 
-  domain_name               = "${var.service}.${var.environment}.${data.aws_route53_zone.selected.name}"
-  subject_alternative_names = ["*.${var.service}.${var.environment}.${data.aws_route53_zone.selected.name}"]
+  domain_name               = local.fqdn
+  subject_alternative_names = ["*.${local.fqdn}"]
   validation_method         = "DNS"
 }
 
