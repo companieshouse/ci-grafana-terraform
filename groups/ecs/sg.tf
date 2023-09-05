@@ -1,6 +1,6 @@
 resource "aws_security_group" "alb_security_group" {
-  name        = "${var.environment}-${var.service}-lb"
-  description = "Restricts access for ${var.service}-${var.environment} lb ${var.service} nodes"
+  name        = "${local.resource_prefix}-sg"
+  description = "Restricts access for ${local.resource_prefix} lb ${var.service} nodes"
   vpc_id      = data.aws_vpc.placement.id
 
   ingress {
@@ -21,7 +21,7 @@ resource "aws_security_group" "alb_security_group" {
   }
 
   tags = {
-    Name    = "${var.environment}-${var.service}-lb"
+    Name    = "${local.resource_prefix}-lb"
     Type    = "security-group"
   }
 
