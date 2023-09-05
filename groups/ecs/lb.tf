@@ -12,6 +12,7 @@ resource "aws_lb_target_group" "grafana_tg" {
   port                       = 3000
   protocol                   = "HTTP"
   vpc_id                     = data.aws_vpc.placement.id
+  target_type                = "ip"
 
   health_check {
     healthy_threshold        = 3
@@ -36,11 +37,11 @@ resource "aws_lb_listener" "grafana_listener" {
 }
 
 resource "aws_acm_certificate" "certificate" {
-  count = local.create_ssl_certificate ? 1 : 0
+  count                      = local.create_ssl_certificate ? 1 : 0
 
-  domain_name               = local.fqdn
-  subject_alternative_names = ["*.${local.fqdn}"]
-  validation_method         = "DNS"
+  domain_name                = local.fqdn
+  subject_alternative_names  = ["*.${local.fqdn}"]
+  validation_method          = "DNS"
 }
 
 resource "aws_route53_record" "certificate_validation" {
