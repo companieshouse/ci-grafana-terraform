@@ -1,9 +1,9 @@
 resource "aws_ecs_cluster" "grafana_cluster" {
-  name = "${var.service}-cluster"
+  name = "${local.resource_prefix}-cluster"
 }
 
 resource "aws_ecs_task_definition" "grafana_task" {
-  family                   = local.ecs_grafana_family
+  family                   = "${local.resource_prefix}-task"
   network_mode             = var.ecs_grafana_network_mode
   requires_compatibilities = [var.ecs_grafana_launch_type]
   cpu                      = var.ecs_grafana_cpu
@@ -15,7 +15,7 @@ resource "aws_ecs_task_definition" "grafana_task" {
   container_definitions    = jsonencode(
     [
       {
-        name : "${var.service}-container",
+        name : "${local.resource_prefix}-container",
         image : "${var.ecr_repository}:${var.grafana_image_version}",
         essential : true,
         portMappings : [
@@ -30,11 +30,12 @@ resource "aws_ecs_task_definition" "grafana_task" {
 }
 
 resource "aws_ecs_service" "grafana_service" {
-  name                              = "${var.service}-service"
+  name                              = "${local.resource_prefix}-service"
   cluster                           = aws_ecs_cluster.grafana_cluster.id
   task_definition                   = aws_ecs_task_definition.grafana_task.arn
   launch_type                       = var.ecs_grafana_launch_type
-  desired_count                     = 1
+  desired_count                     = var.grafana_service_desired_count
+  iam_role                          = aws_iam_role.ecs_execution_role.arn
   depends_on                        = [
     aws_iam_role.ecs_execution_role,
   ]
@@ -42,6 +43,15 @@ resource "aws_ecs_service" "grafana_service" {
   network_configuration {
     subnets          = local.placement_subnet_ids
     assign_public_ip = false
+    security_groups = [
+      aws_security_group.alb_security_group.arn,
+    ]
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.grafana_tg.arn
+    container_name = "${local.resource_prefix}-container"
+    container_port = 3000
   }
 
 }
