@@ -18,5 +18,6 @@ locals {
   dns_zone_name               = local.secrets.dns_zone_name
   resource_prefix             = "${var.environment}-${var.service}"
   fqdn                        = "${local.resource_prefix}.${data.aws_route53_zone.selected.name}"
+  container_name              = "${local.resource_prefix}-container"
 
 }

@@ -15,7 +15,7 @@ resource "aws_ecs_task_definition" "grafana_task" {
   container_definitions    = jsonencode(
     [
       {
-        name : "${local.resource_prefix}-container",
+        name : local.container_name,
         image : "${var.ecr_repository}:${var.grafana_image_version}",
         essential : true,
         portMappings : [
@@ -34,7 +34,7 @@ resource "aws_ecs_service" "grafana_service" {
   task_definition                   = aws_ecs_task_definition.grafana_task.arn
   launch_type                       = var.ecs_grafana_launch_type
   desired_count                     = var.grafana_service_desired_count
-  health_check_grace_period_seconds = 120
+  health_check_grace_period_seconds = 600
   depends_on                        = [
     aws_iam_role.ecs_execution_role,
   ]
@@ -49,7 +49,7 @@ resource "aws_ecs_service" "grafana_service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.grafana_tg.arn
-    container_name = "${local.resource_prefix}-container"
+    container_name = local.container_name
     container_port = 3000
   }
 
