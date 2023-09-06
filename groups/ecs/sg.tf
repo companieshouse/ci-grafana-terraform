@@ -1,4 +1,8 @@
 resource "aws_security_group" "alb_security_group" {
+  lifecycle {
+    create_before_destroy = true
+  }
+
   name        = "${local.resource_prefix}-lb-sg"
   description = "Restricts access for ${local.resource_prefix} lb ${var.service} nodes"
   vpc_id      = data.aws_vpc.placement.id
@@ -37,6 +41,10 @@ resource "aws_security_group" "alb_security_group" {
 }
 
 resource "aws_security_group" "ecs_tasks_sg" {
+  lifecycle {
+    create_before_destroy = true
+  }
+
   name        = "${local.resource_prefix}-ecs-tasks-sg"
   description = "ECS Tasks Security Group"
   vpc_id      = data.aws_vpc.placement.id
