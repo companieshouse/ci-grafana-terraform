@@ -13,7 +13,7 @@ locals {
   placement_vpc_pattern     = local.secrets.placement_vpc_pattern
 
   create_ssl_certificate      = var.ssl_certificate_name == "" ? true : false
-  ssl_certificate_arn         = var.ssl_certificate_name == "" ? aws_acm_certificate_validation.certificate[0].certificate_arn : data.aws_acm_certificate.certificate[0].arn
+#  ssl_certificate_arn         = var.ssl_certificate_name == "" ? aws_acm_certificate_validation.certificate[0].certificate_arn : data.aws_acm_certificate.certificate[0].arn
 
   dns_zone_name               = local.secrets.dns_zone_name
   resource_prefix             = "${var.environment}-${var.service}"
