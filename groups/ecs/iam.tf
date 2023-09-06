@@ -19,11 +19,13 @@ data "aws_iam_policy_document" "ecs_execution_permissions" {
       "ecr:GetAuthorizationToken",
       "ecr:BatchCheckLayerAvailability",
       "ecr:GetDownloadUrlForLayer",
+      "ecr:BatchGetImage",
       "logs:CreateLogStream",
       "logs:PutLogEvents"
     ]
     resources = [
-      "*"
+      "*",
+      "arn:aws:ecr:eu-west-2:416670754337:repository/ci-grafana-image",
     ]
   }
 }
@@ -53,14 +55,14 @@ data "aws_iam_policy_document" "ecs_task_permissions" {
 
 
 resource "aws_iam_policy" "ecs_task_permissions" {
-  name        = "ECSTaskPermissions"
+  name        = "${local.resource_prefix}-ECSTaskPermissions"
   description = "Permissions for ECS Task Role"
   policy      = data.aws_iam_policy_document.ecs_task_permissions.json
 }
 
 
 resource "aws_iam_policy" "ecs_execution_permissions" {
-  name        = "ECSExecutionPermissions"
+  name        = "${local.resource_prefix}-ECSExecutionPermissions"
   description = "Permissions for ECS Execution Role"
   policy      = data.aws_iam_policy_document.ecs_execution_permissions.json
 }
