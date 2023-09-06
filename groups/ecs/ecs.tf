@@ -15,14 +15,24 @@ resource "aws_ecs_task_definition" "grafana_task" {
   container_definitions    = jsonencode(
     [
       {
-        name : local.container_name,
-        image : "${var.ecr_repository}:${var.grafana_image_version}",
-        essential : true,
-        portMappings : [
+        name = local.container_name,
+        image = "${var.ecr_repository}:${var.grafana_image_version}",
+        cpu       = 10
+        memory    = 512
+        essential = true,
+        portMappings = [
           {
-            "containerPort": 3000,
+            "containerPort" = 3000,
           }
         ]
+        logConfiguration = {
+          logDriver = "awslogs"
+          options = {
+            awslogs-group         = aws_cloudwatch_log_group.grafana_log_group.name
+            awslogs-region        = "eu-west-2"
+            awslogs-stream-prefix = "ecs"
+        }
+      }
       }
     ]
   )
