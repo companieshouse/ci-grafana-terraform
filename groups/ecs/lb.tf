@@ -19,7 +19,7 @@ resource "aws_lb_target_group" "grafana_tg" {
     unhealthy_threshold      = 3
     timeout                  = 30
     interval                 = 60
-    path                     = "/healthz"
+    path                     = "/"
   }
 }
 
