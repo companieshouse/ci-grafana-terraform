@@ -21,7 +21,6 @@ resource "aws_ecs_task_definition" "grafana_task" {
         portMappings : [
           {
             "containerPort": 3000,
-            "hostPort": 3000
           }
         ]
       }
@@ -35,6 +34,7 @@ resource "aws_ecs_service" "grafana_service" {
   task_definition                   = aws_ecs_task_definition.grafana_task.arn
   launch_type                       = var.ecs_grafana_launch_type
   desired_count                     = var.grafana_service_desired_count
+  health_check_grace_period_seconds = 120
   depends_on                        = [
     aws_iam_role.ecs_execution_role,
   ]
@@ -43,7 +43,7 @@ resource "aws_ecs_service" "grafana_service" {
     subnets          = local.placement_subnet_ids
     assign_public_ip = false
     security_groups = [
-      aws_security_group.alb_security_group.id,
+      aws_security_group.ecs_tasks_sg.id,
     ]
   }
 
