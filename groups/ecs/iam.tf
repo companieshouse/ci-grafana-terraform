@@ -23,8 +23,7 @@ data "aws_iam_policy_document" "ecs_execution_permissions" {
       "logs:PutLogEvents"
     ]
     resources = [
-      "arn:aws:ecr:*:*:repository/${var.service}*",
-      "arn:aws:logs:*:*:log-group:${local.resource_prefix}*"
+      "*"
     ]
   }
 }
