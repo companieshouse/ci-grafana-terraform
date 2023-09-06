@@ -43,7 +43,7 @@ resource "aws_ecs_service" "grafana_service" {
     subnets          = local.placement_subnet_ids
     assign_public_ip = false
     security_groups = [
-      aws_security_group.alb_security_group.arn,
+      aws_security_group.alb_security_group.id,
     ]
   }
 
