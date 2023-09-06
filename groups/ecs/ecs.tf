@@ -2,6 +2,17 @@ resource "aws_ecs_cluster" "grafana_cluster" {
   name = "${local.resource_prefix}-cluster"
 }
 
+resource "aws_ecs_cluster_capacity_providers" "example" {
+  cluster_name = aws_ecs_cluster.grafana_cluster.name
+
+  capacity_providers = ["FARGATE"]
+
+  default_capacity_provider_strategy {
+    weight            = 100
+    capacity_provider = "FARGATE"
+  }
+}
+
 resource "aws_ecs_task_definition" "grafana_task" {
   family                   = "${local.resource_prefix}-task"
   network_mode             = var.ecs_grafana_network_mode
