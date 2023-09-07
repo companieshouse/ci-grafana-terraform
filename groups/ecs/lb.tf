@@ -18,7 +18,7 @@ resource "aws_lb_target_group" "grafana_tg" {
     healthy_threshold   = 10
     unhealthy_threshold = 10
     timeout             = 120
-    interval            = 600
+    interval            = 300
     path                = "/api/health"
     protocol            = "HTTP"
     port                = "3000"
