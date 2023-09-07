@@ -15,9 +15,9 @@ resource "aws_lb_target_group" "grafana_tg" {
   target_type                = "ip"
 
   health_check {
-    healthy_threshold   = 30
-    unhealthy_threshold = 30
-    timeout             = 300
+    healthy_threshold   = 10
+    unhealthy_threshold = 10
+    timeout             = 120
     interval            = 600
     path                = "/api/health"
     protocol            = "HTTP"
