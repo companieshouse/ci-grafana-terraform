@@ -23,14 +23,6 @@ resource "aws_security_group" "alb_security_group" {
     prefix_list_ids = [data.aws_ec2_managed_prefix_list.administration.id]
   }
 
-  ingress {
-    description     = "lb HTTPS ingress from grafana default port"
-    from_port       = 3000
-    to_port         = 3000
-    protocol        = "tcp"
-    prefix_list_ids = [data.aws_ec2_managed_prefix_list.administration.id]
-  }
-
   egress {
     description = "Allow outbound traffic"
     from_port   = 0
