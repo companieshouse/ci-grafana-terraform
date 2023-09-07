@@ -15,11 +15,12 @@ resource "aws_lb_target_group" "grafana_tg" {
   target_type                = "ip"
 
   health_check {
-    healthy_threshold        = 3
-    unhealthy_threshold      = 3
-    timeout                  = 30
-    interval                 = 60
-    path                     = "/"
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    timeout             = 30
+    interval            = 60
+    path                = "/healthz"
+    port                = "3000"
   }
 }
 
@@ -35,6 +36,23 @@ resource "aws_lb_listener" "grafana_listener" {
     target_group_arn         = aws_lb_target_group.grafana_tg.arn
   }
 }
+
+resource "aws_lb_listener" "http_redirect_listener" {
+  load_balancer_arn = aws_lb.grafana_lb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect_action {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
 
 resource "aws_acm_certificate" "certificate" {
   count                      = local.create_ssl_certificate ? 1 : 0
