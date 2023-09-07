@@ -45,7 +45,7 @@ resource "aws_ecs_service" "grafana_service" {
   launch_type                       = var.ecs_grafana_launch_type
   platform_version                  = "LATEST"
   desired_count                     = var.grafana_service_desired_count
-  health_check_grace_period_seconds = 600
+  health_check_grace_period_seconds = 120
   depends_on                        = [
     aws_iam_role.ecs_execution_role,
   ]
