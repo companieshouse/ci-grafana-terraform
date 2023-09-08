@@ -1,3 +1,5 @@
+data "aws_region" "current" {}
+
 data "vault_generic_secret" "account_ids" {
   path = "aws-accounts/account-ids"
 }
@@ -37,13 +39,6 @@ data "aws_subnets" "automation" {
     values = [local.automation_subnet_pattern]
   }
 }
-
-data "aws_route53_zone" "selected" {
-  name         = local.dns_zone_name
-  private_zone = false
-}
-
-data "aws_region" "current" {}
 
 data "aws_subnets" "placement" {
   filter {
