@@ -77,3 +77,9 @@ variable "ecs_grafana_memory" {
   default     = 512
   type        = number
 }
+
+variable "db_engine" {
+  description = "Database engine"
+  default     = "postgres"
+  type        = string
+}
