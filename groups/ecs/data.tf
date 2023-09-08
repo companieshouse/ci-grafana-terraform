@@ -18,7 +18,6 @@ data "aws_subnet" "placement" {
   id = each.value
 }
 
-
 data "aws_subnets" "placement" {
   filter {
     name = "vpc-id"
@@ -48,4 +47,8 @@ data "aws_ec2_managed_prefix_list" "administration" {
     name   = "prefix-list-name"
     values = ["administration-cidr-ranges"]
   }
+}
+
+data "aws_db_instance" "grafana_rds" {
+  db_instance_identifier = "${local.resource_prefix}-${var.db_engine}"
 }
