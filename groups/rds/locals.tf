@@ -15,6 +15,7 @@ locals {
   automation_subnet_pattern = local.secrets.automation_subnet_pattern
   automation_vpc_pattern    = local.secrets.automation_vpc_pattern
 
+  resource_prefix          = "${var.environment}-${var.service}"
 
   db_subnet         = local.secrets.db_subnet
   db_username       = local.secrets.db_username
