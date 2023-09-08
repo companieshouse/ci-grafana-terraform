@@ -21,7 +21,7 @@ variable "repository_name" {
 
 variable "service" {
   description = "The service name to be used when creating AWS resources"
-  default     = "grafana"
+  default     = "ci-grafana"
   type        = string
 }
 
