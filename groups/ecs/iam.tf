@@ -3,6 +3,7 @@ data "aws_iam_policy_document" "ecs_execution_role_policy" {
     effect  = "Allow"
     actions = [
       "sts:AssumeRole",
+      "ssm:GetParameters",
     ]
 
     principals {
@@ -21,7 +22,8 @@ data "aws_iam_policy_document" "ecs_execution_permissions" {
       "ecr:GetDownloadUrlForLayer",
       "ecr:BatchGetImage",
       "logs:CreateLogStream",
-      "logs:PutLogEvents"
+      "logs:PutLogEvents",
+      "ssm:GetParameters",
     ]
     resources = [
       "*",
@@ -36,6 +38,7 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
     effect  = "Allow"
     actions = [
       "sts:AssumeRole",
+      "ssm:GetParameters"
     ]
 
     principals {
@@ -48,7 +51,10 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
 data "aws_iam_policy_document" "ecs_task_permissions" {
   statement {
     effect    = "Allow"
-    actions   = ["cloudwatch:ListMetrics"]
+    actions   = [
+      "cloudwatch:ListMetrics",
+      "ssm:GetParameters"
+    ]
     resources = ["arn:aws:cloudwatch:*:*:metric/${local.resource_prefix}*"]
   }
 }
