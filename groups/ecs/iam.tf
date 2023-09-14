@@ -3,7 +3,6 @@ data "aws_iam_policy_document" "ecs_execution_role_policy" {
     effect  = "Allow"
     actions = [
       "sts:AssumeRole",
-      "ssm:GetParameters",
     ]
 
     principals {
@@ -38,7 +37,6 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
     effect  = "Allow"
     actions = [
       "sts:AssumeRole",
-      "ssm:GetParameters"
     ]
 
     principals {
