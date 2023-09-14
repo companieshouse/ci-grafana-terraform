@@ -16,7 +16,7 @@ locals {
   automation_vpc_pattern    = local.secrets.automation_vpc_pattern
 
   resource_prefix           = "${var.environment}-${var.service}"
-  db_name                   = trim("${local.resource_prefix}-db", "-")
+  db_name                   = "cigrafana"
   db_subnet                 = local.secrets.db_subnet
   db_username               = local.secrets.db_username
   db_password               = local.secrets.db_password
