@@ -22,6 +22,5 @@ locals {
 
   db_username              = local.secrets.db_username
   db_password              = local.secrets.db_password
-  db_endpoint              = module.rds.rds_endpoint.value
 
 }
