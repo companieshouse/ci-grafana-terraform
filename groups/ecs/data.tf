@@ -52,3 +52,11 @@ data "aws_ec2_managed_prefix_list" "administration" {
 data "aws_db_instance" "grafana_rds" {
   db_instance_identifier = "${local.resource_prefix}-${var.db_engine}"
 }
+
+data "aws_ssm_parameter" "database_username" {
+  name = "/${var.environment}/${var.service}/rds/username"
+}
+
+data "aws_ssm_parameter" "database_password" {
+  name = "/${var.environment}/${var.service}/rds/password"
+}

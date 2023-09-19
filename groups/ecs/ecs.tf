@@ -36,25 +36,25 @@ resource "aws_ecs_task_definition" "grafana_task" {
         secrets = [
           {
             name      = "GF_DATABASE_USER",
-            valueFrom = local.db_username
+            valueFrom = data.aws_ssm_parameter.database_username.arn
           },
           {
             name      = "GF_DATABASE_PASSWORD",
-            valueFrom = local.db_password
-          }
+            valueFrom = data.aws_ssm_parameter.database_password.arn
+          },
         ],
         environment = [
           {
-            name = "GF_DATABASE_HOST",
-            value = data.aws_db_instance.grafana_rds.endpoint
+            name      = "GF_DATABASE_HOST",
+            value     = data.aws_db_instance.grafana_rds.endpoint
           },
           {
-            name = "GF_DATABASE_NAME"
-            value = data.aws_db_instance.grafana_rds.db_name
+            name      = "GF_DATABASE_NAME"
+            value     = data.aws_db_instance.grafana_rds.db_name
           },
           {
-            name = "GF_DATABASE_TYPE"
-            value = data.aws_db_instance.grafana_rds.engine
+            name      = "GF_DATABASE_TYPE"
+            value     = data.aws_db_instance.grafana_rds.engine
           },
 
 

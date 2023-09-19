@@ -20,7 +20,4 @@ locals {
   fqdn                     = "${local.resource_prefix}.${data.aws_route53_zone.selected.name}"
   container_name           = "${local.resource_prefix}-container"
 
-  db_username              = local.secrets.db_username
-  db_password              = local.secrets.db_password
-
 }

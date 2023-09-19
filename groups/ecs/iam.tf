@@ -53,7 +53,7 @@ data "aws_iam_policy_document" "ecs_task_permissions" {
       "cloudwatch:ListMetrics",
       "ssm:GetParameters"
     ]
-    resources = ["arn:aws:cloudwatch:*:*:metric/${local.resource_prefix}*"]
+    resources = ["*"]
   }
 }
 
