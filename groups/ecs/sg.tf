@@ -42,10 +42,10 @@ resource "aws_security_group" "ecs_tasks_sg" {
   vpc_id      = data.aws_vpc.placement.id
 
   ingress {
-    from_port   = 1024
-    to_port     = 65535
-    protocol    = "tcp"
-    prefix_list_ids = [data.aws_ec2_managed_prefix_list.administration.id]
+    from_port       = 3000
+    to_port         = 3000
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb_security_group.id]
   }
 
   egress {

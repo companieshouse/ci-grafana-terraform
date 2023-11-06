@@ -44,7 +44,7 @@ variable "ssl_certificate_name" {
 
 variable "grafana_service_desired_count" {
   description = "The number of Grafana instances we want to aim for under normal circumstances"
-  default     = 3
+  default     = 1
   type        = number
 }
 
