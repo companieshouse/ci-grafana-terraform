@@ -1,3 +1,6 @@
+#-------------------------------------------------------------------------------
+# General vars
+#-------------------------------------------------------------------------------
 variable "aws_account" {
   description = "The name of the AWS account we're using"
   type        = string
@@ -21,6 +24,46 @@ variable "service" {
 variable "team" {
   description = "The name of the team supporting the service"
   type        = string
+}
+
+variable "vpc_id" {
+  description = "The ID of the VPC that resources will be deployed in to"
+  type        = string
+}
+
+#-------------------------------------------------------------------------------
+# RDS vars
+#-------------------------------------------------------------------------------
+variable "allocated_storage" {
+  description = "Amount of storage allocated to the RDS instance in GiB"
+  type        = number
+}
+
+variable "auto_minor_version_upgrade" {
+  default     = false
+  description = "Defines whether auto_minor_version_upgrade is enabled (true) or not (false)"
+  type        = bool
+}
+
+variable "backup_retention_period" {
+  description = "Retention period, in days, of automated RDS backups"
+  type        = number
+}
+
+variable "backup_window" {
+  description = "The window during which AWS can take automated backups. Cannot overlap with `maintenance_window`"
+  type        = string
+}
+
+variable "db_name" {
+  description = "The name of the database to create within the RDS"
+  type        = string
+}
+
+variable "deletion_protection" {
+  default     = true
+  description = "Defines whether deletion protection is enabled (true) or not (false)"
+  type        = bool
 }
 
 variable "engine" {
@@ -48,30 +91,15 @@ variable "instance_class" {
   type        = string
 }
 
-variable "allocated_storage" {
-  description = "Amount of storage allocated to the RDS instance in GiB"
-  type        = number
-}
-
-variable "deletion_protection" {
-  default     = true
-  description = "Defines whether deletion protection is enabled (true) or not (false)"
-  type        = bool
-}
-
-variable "backup_retention_period" {
-  description = "Retention period, in days, of automated RDS backups"
-  type        = number
-}
-
-variable "backup_window" {
-  description = "The window during which AWS can take automated backups. Cannot overlap with `maintenance_window`"
-  type        = string
-}
-
 variable "maintenance_window" {
   description = "The window during which RDS maintenance can take place. Cannot overlap with `backup_window`"
   type        = string
+}
+
+variable "multi_az" {
+  default     = false
+  description = "Defines whether the RDS should be configured for multi AZ operation (true) or not (false)"
+  type        = bool
 }
 
 variable "ingress_cidrs" {
@@ -84,19 +112,21 @@ variable "ingress_prefix_list_ids" {
   type        = list(string)
 }
 
+variable "port" {
+  default     = 0
+  description = "The post on which the RDS will listen. If empty, the engine default will be used"
+  type        = number
+}
+
+variable "skip_final_snapshot" {
+  default     = false
+  description = "If the RDS is destroyed, defines whether taking a final snapshot should be skipped (true) or not (false)"
+  type        = bool
+}
+
 variable "subnet_ids" {
-  description = "A list of subnet IDs that the RDS resources will be created within"
+  description = "A list of subnet IDs that will be used to create the RDS subnet group"
   type        = list(string)
-}
-
-variable "vpc_id" {
-  description = "The ID of the VPC that resources will be deployed in to"
-  type        = string
-}
-
-variable "db_name" {
-  description = "The name of the database to create within the RDS"
-  type        = string
 }
 
 variable "password" {
@@ -107,22 +137,4 @@ variable "password" {
 variable "username" {
   description = "The database username"
   type        = string
-}
-
-variable "auto_minor_version_upgrade" {
-  default     = false
-  description = "Defines whether auto_minor_version_upgrade is enabled (true) or not (false)"
-  type        = bool
-}
-
-variable "skip_final_snapshot" {
-  default     = false
-  description = "If the RDS is destroyed, defines whether taking a final snapshot should be skipped (true) or not (false)"
-  type        = bool
-}
-
-variable "multi_az" {
-  default     = false
-  description = "Defines whether the RDS should be configured for multi AZ operation (true) or not (false)"
-  type        = bool
 }
