@@ -11,7 +11,7 @@ terraform {
 }
 
 module "grafana_rds" {
-  source = "./module-rds"
+  source = "git@github.com:companieshouse/terraform-modules//aws/rds_instance?ref=feature/add-rds-instance-module"
 
   aws_account                 = var.aws_account
   aws_region                  = var.aws_region
