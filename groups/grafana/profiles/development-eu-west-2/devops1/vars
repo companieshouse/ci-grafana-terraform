@@ -1,2 +1,3 @@
 aws_account = "development"
 environment = "devops1"
+ssl_certificate_name = "*.companieshouse.gov.uk"

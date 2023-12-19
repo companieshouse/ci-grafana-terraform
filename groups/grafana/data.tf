@@ -38,3 +38,20 @@ data "aws_ec2_managed_prefix_list" "admin" {
     values = ["administration-cidr-ranges"]
   }
 }
+
+data "aws_acm_certificate" "certificate" {
+  count       = local.create_ssl_certificate ? 0 : 1
+
+  domain      = var.ssl_certificate_name
+  statuses    = ["ISSUED"]
+  most_recent = true
+}
+
+data "aws_ecs_cluster" "ecs" {
+  cluster_name = "${local.name_prefix}-cluster"
+}
+
+data "aws_iam_role" "ecs_cluster_iam_role" {
+  name = "${local.name_prefix}-ecs-task-execution-role"
+}
+

@@ -64,7 +64,7 @@ variable "rds_engine_minor_version" {
 
 variable "rds_instance_class" {
   description = "Database instance class"
-  default     = "db.t4g.small"
+  default     = "db.t3.small"
   type        = string
 }
 
@@ -101,8 +101,13 @@ variable "rds_maintenance_window" {
 #-------------------------------------------------------------------------------
 # ECS vars
 #-------------------------------------------------------------------------------
-variable "ecr_repository" {
-  description = "The ECR repositor name for the task image"
+variable "ecr_image_registry" {
+  description = "The ECR registry name that holds the image repository"
+  type        = string
+}
+
+variable "ecr_image_repository" {
+  description = "The ECR repository name for the task image"
   default     = "ci-grafana-image"
   type        = string
 }
@@ -112,38 +117,38 @@ variable "ecr_image_version" {
   default     = "latest"
 }
 
-variable "ecs_service_desired_count" {
+variable "ecs_task_desired_count" {
   description = "The number of Grafana instances we want to aim for under normal circumstances"
   default     = 1
   type        = number
 }
 
-variable "ecs_task_network_mode" {
-  description = "The network_mode that the grafana task requires"
-  default     = "awsvpc"
-  type        = string
+variable "ecs_task_port" {
+  description = "The TCP port on which the task will listen"
+  default     = 3000
+  type        = number
 }
 
-variable "ecs_task_launch_type" {
-  description = "The launch_type that the grafana task requires"
-  default     = "FARGATE"
-  type        = string
-}
-
-variable "ecs_task_cpu" {
+variable "ecs_task_required_cpus" {
   description = "The amount of cpu that the grafana task requires"
   default     = 256
   type        = number
 }
 
-variable "ecs_task_memory" {
+variable "ecs_task_required_memory" {
   description = "The amount of memory that the grafana task requires"
   default     = 512
   type        = number
 }
 
+variable "ecs_use_fargate" {
+  description = "Defines whether the deployment should use FARGATE (true) or EC2 (false)"
+  default     = true
+  type        = bool
+}
+
 variable "ssl_certificate_name" {
-  description = "The name of an existing ACM certificate to use for the ELB SSL listener. Setting this disables certificate creation"
+  description = "The name of an existing ACM certificate to use for the ALB SSL listener. Setting this disables certificate creation"
   default     = ""
   type        = string
 }
