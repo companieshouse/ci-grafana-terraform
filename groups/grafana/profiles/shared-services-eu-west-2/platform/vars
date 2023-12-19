@@ -1,0 +1,3 @@
+aws_account = "shared-services"
+environment = "platform"
+ssl_certificate_name = "*.companieshouse.gov.uk"
