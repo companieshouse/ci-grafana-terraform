@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Shared vars
+# Shared variables
 #-------------------------------------------------------------------------------
 variable "aws_account" {
   description = "The name of the AWS account we're using"
@@ -23,14 +23,8 @@ variable "service" {
   type        = string
 }
 
-variable "team" {
-  description = "The name of the team"
-  default     = "platform"
-  type        = string
-}
-
 #-------------------------------------------------------------------------------
-# RDS vars
+# RDS variables
 #-------------------------------------------------------------------------------
 variable "rds_port" {
   description = "The port that the database can be reached on"
@@ -99,7 +93,7 @@ variable "rds_maintenance_window" {
 }
 
 #-------------------------------------------------------------------------------
-# ECS vars
+# ECS variables
 #-------------------------------------------------------------------------------
 variable "ecr_image_registry" {
   description = "The ECR registry name that holds the image repository"
@@ -151,4 +145,49 @@ variable "ssl_certificate_name" {
   description = "The name of an existing ACM certificate to use for the ALB SSL listener. Setting this disables certificate creation"
   default     = ""
   type        = string
+}
+
+#-------------------------------------------------------------------------------
+# Grafana configuration variables
+#-------------------------------------------------------------------------------
+variable "gf_log_mode" {
+  default     = "console"
+  description = "Defines where Grafana will log. One of ['console', 'file', 'syslog'], 'console' will log to ECS logs"
+  type        = string
+}
+
+variable "gf_log_user_facing_default_error" {
+  default     = "Please inspect the ECS logs for details."
+  description = "Defines the message returned to users when an error is encountered"
+  type        = string
+}
+
+variable "gf_security_cookie_secure" {
+  default     = true
+  description = "Defines whether secure cookies are enabled (true) or disabled (false)"
+  type        = bool
+}
+
+variable "gf_security_disable_gravatar" {
+  default     = false
+  description = "Defines whetheer Gravatar features are enabled (true) or disabled (false)"
+  type        = bool
+}
+
+variable "gf_security_strict_transport_security" {
+  default     = true
+  description = "Defines whether HSTS is enabled (true) or disabled (false)"
+  type        = bool
+}
+
+variable "gf_security_strict_transport_security_subdomains" {
+  default     = true
+  description = "Defines whether subdomains are included in HSTS responses (true) or omitted (false)"
+  type        = bool
+}
+
+variable "gf_snapshots_enabled" {
+  default     = false
+  description = "Defines whether snapshots are enabled (true) or disabled (false)"
+  type        = bool
 }

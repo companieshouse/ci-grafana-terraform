@@ -3,7 +3,7 @@ data "vault_generic_secret" "account_ids" {
 }
 
 data "vault_generic_secret" "secrets" {
-  path = "team-${var.team}/${var.aws_account}/${var.aws_region}/${var.environment}/${var.service}"
+  path = "team-platform/${var.aws_account}/${var.aws_region}/${var.environment}/${var.service}"
 }
 
 
