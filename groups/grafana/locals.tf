@@ -7,7 +7,7 @@ locals {
   rds_password            = local.secrets.rds_password
   rds_db_name             = var.service
 
-  resource_prefix         = "${var.service}-${var.environment}"
+  resource_prefix         = "${var.environment}-${var.service}"
   ingress_prefix_list_ids = [
     data.aws_ec2_managed_prefix_list.admin.id
   ]

@@ -70,7 +70,7 @@ module "grafana_alb" {
 module "grafana_secrets" {
   source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.216"
 
-  name_prefix = "${var.service}-${var.environment}"
+  name_prefix = local.resource_prefix
   environment = var.environment
   kms_key_id  = aws_kms_alias.grafana.arn
   secrets     = local.parameter_store_secrets
