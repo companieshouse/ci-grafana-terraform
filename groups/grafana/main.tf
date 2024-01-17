@@ -11,7 +11,7 @@ terraform {
 }
 
 module "grafana_rds" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/rds_instance?ref=feature/add-rds-instance-module"
+  source = "git@github.com:companieshouse/terraform-modules//aws/rds_instance?ref=1.0.238"
 
   environment             = var.environment
   service                 = var.service
@@ -37,7 +37,7 @@ module "grafana_rds" {
 }
 
 module "grafana_alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.232"
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.238"
 
   environment             = var.environment
   service                 = var.service
@@ -68,7 +68,7 @@ module "grafana_alb" {
 }
 
 module "grafana_secrets" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.216"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.238"
 
   name_prefix = local.resource_prefix
   environment = var.environment
@@ -77,7 +77,7 @@ module "grafana_secrets" {
 }
 
 module "grafana_ecs" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-service?ref=1.0.231"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-service?ref=1.0.238"
 
   # Environmental configuration
   environment             = var.environment
